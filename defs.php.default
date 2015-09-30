@@ -1,0 +1,37 @@
+<?php
+
+	define("DEBUG", "0"); // 1 чи 0
+
+	define("FILENAME_LENGTH", 10);
+	define("FILE_KEY", "\x37");
+	define("PIC_MAXX", 150);
+	define("PIC_MAXY", 300);
+	define("DB_USER_PASS_SALT", "aaaaa");
+	define("DB_COOKIE_PASS_SALT", "bbbbb");
+	define("STATUS", "HTTP/1.1");
+	define("DB_HOST", "localhost");
+	define("DB_USER", "postgres");
+	define("DB_PASSWORD", "ccccc");
+	define("DB_NAME", "hyperchan");
+
+	define("NOTIFICATION_SERVER_PORT", 79);
+	define("NOTIFICATION_SALT", "ddddd");
+
+	define("DEFAULT_PAGES_PER_BOARD", 10);
+	define("DEFAULT_LAST_POSTS_PER_THREAD", 5);
+
+	define("MAX_BYTES_PER_MESSAGE", 5000);
+	define("MAX_BYTES_PER_FILE", 10*1024*1024);
+
+	date_default_timezone_set("UTC");
+
+	define("HTTP200", STATUS." 200 Виконано");
+	define("HTTP302", STATUS." 302 Знайдено");
+	define("HTTP400", STATUS." 400 Поганий запит");
+	define("HTTP404", STATUS." 404 Не знайдено");
+	define("HTTP500", STATUS." 500 Внутрішня помилка сервера");
+
+	define("LONG_COOKIE_END", 1893452400);
+	define("MIN_DIFF_IP_TIME_GAP", 86400);
+	define("MIN_DIFF_IP_TIME_INVITE_GAP", 259200);
+	define("SESSION_TOKEN", "PHPSESSID");
