@@ -15,22 +15,34 @@
 		font-family:"Trebuchet MS",Trebuchet,sans-serif;
 		text-align:center;
 	}
-	.a {
-		font-size:30pt;
-	}
 	.s {
 		width:20pt;
 		display:inline-block;
 	}
-	#i {
-		width:100%;
-		font-size:10pt;
-		padding:30pt 0;
+	#test {
+		color:white;
+		background-color:red;
+		width:250px;
 	}
-
 	</style>
+	<script>
+		document.addEventListener("DOMContentLoaded", function(){ on_load(); });
+	</script>
+<?php if (DEBUG): ?>
+	<script src="/raw_js/closure-library/closure/goog/base.js"></script>
+	<script src="/raw_js/a.js"></script>
+<?php else: ?>
+	<script src="/res/a.js?<?php echo resource_version("a.js"); ?>"></script>
+<?php endif; ?>
 </head>
-<body class=a>
-<table><tr><td>hi.</td></tr></table>
+<body>
+<div id=test>test test test</div>
+text-align:
+<form>
+<select id=al>
+	<option value=left>left</option>
+	<option value=right>right</option>
+</select>
+</form>
 </body>
 </html>
