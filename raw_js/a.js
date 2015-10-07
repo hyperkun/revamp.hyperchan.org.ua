@@ -1,5 +1,7 @@
 goog.require("goog.events");
 
+goog.provide("hyperchan.revamp");
+
 function g(id) {
 	return document.getElementById(id);
 }
@@ -16,4 +18,4 @@ function element_change(elem) {
 }
 
 goog.exportSymbol('g', g);
-goog.exportSymbol('element_change', element_change);
+goog.exportSymbol('on_load', on_load);

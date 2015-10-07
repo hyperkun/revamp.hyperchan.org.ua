@@ -34,8 +34,9 @@ then
 	rm -r /tmp/hyper-build
 fi
 
-closure-library/closure/bin/calcdeps.py -i a.js \
-	-p closure-library -o compiled -c closure-compiler.jar \
-	-f "--compilation_level=ADVANCED_OPTIMIZATIONS" \
-	-f "--charset=UTF-8" \
-> ../res/a.js
+java -jar closure-compiler.jar --js a.js --js closure-library \
+	--only_closure_dependencies \
+	--closure_entry_point hyperchan.revamp \
+	--compilation_level=ADVANCED_OPTIMIZATIONS \
+	--charset=UTF-8 \
+	--js_output_file ../res/a.js
