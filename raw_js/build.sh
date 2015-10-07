@@ -34,7 +34,7 @@ then
 	rm -r /tmp/hyper-build
 fi
 
-java -jar closure-compiler.jar --js a.js --js closure-library \
+java -jar closure-compiler.jar --js src --js closure-library \
 	--only_closure_dependencies \
 	--closure_entry_point hyperchan.revamp \
 	--compilation_level=ADVANCED_OPTIMIZATIONS \
