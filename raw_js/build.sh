@@ -4,12 +4,12 @@ cd "$(dirname "$0")"
 
 if [[ ! -d closure-library ]];
 then
-	echo "Не знайдено Google Closure Library. Спробую її зкачати..."
+	echo "Не знайдено Google Closure Library. Спробую її скачати..."
 	rm -r /tmp/hyper-build 2> /dev/null
 	mkdir /tmp/hyper-build
 	wget -q -O /tmp/hyper-build/master.zip https://github.com/google/closure-library/archive/master.zip
 	if [ $? -ne 0 ]; then
-		echo "Не можу зкачати Google Closure Library."
+		echo "Не можу скачати Google Closure Library."
 		exit 1
 	fi
 	echo "Google Closure Library закачана, розпаковую...";
@@ -20,12 +20,12 @@ fi
 
 if [[ ! -f closure-compiler.jar ]];
 then
-	echo "Не знайдено Google Closure Compiler. Спробую його зкачати..."
+	echo "Не знайдено Google Closure Compiler. Спробую його скачати..."
 	rm -r /tmp/hyper-build 2> /dev/null
 	mkdir /tmp/hyper-build
 	wget -q -O /tmp/hyper-build/compiler.zip http://dl.google.com/closure-compiler/compiler-latest.zip
 	if [ $? -ne 0 ]; then
-		echo "Не можу зкачати Google Closure Compiler."
+		echo "Не можу скачати Google Closure Compiler."
 		exit 1
 	fi
 	echo "Google Closure Compiler закачаний, розпаковую...";
