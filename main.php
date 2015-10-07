@@ -23,6 +23,7 @@
 		color:white;
 		background-color:red;
 		width:250px;
+		text-align:left;
 	}
 	#toolbar {
 		position:fixed;
@@ -45,7 +46,9 @@
 	</script>
 <?php if (DEBUG): ?>
 	<script src="/raw_js/closure-library/closure/goog/base.js"></script>
-	<script src="/raw_js/a.js"></script>
+	<script src="/raw_js/src/workfield.js"></script>
+	<script src="/raw_js/src/toolbar.js"></script>
+	<script src="/raw_js/src/a.js"></script>
 <?php else: ?>
 	<script src="/res/a.js?<?php echo resource_version("a.js"); ?>"></script>
 <?php endif; ?>

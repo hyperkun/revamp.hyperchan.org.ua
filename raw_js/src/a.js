@@ -1,18 +1,34 @@
 goog.require("goog.events");
 goog.require("goog.style");
+goog.require("revamp.workfield");
+goog.require("revamp.toolbar");
 
-goog.provide("hyperchan.revamp");
+goog.provide("revamp");
+
+var field = null;
+var toolbar = null;
+
+/**
+ * @return {revamp.workfield}
+ */
+function get_field() {
+	return field;
+}
+
+/**
+ * @return {revamp.toolbar}
+ */
+function get_toolbar() {
+	return toolbar;
+}
 
 function g(id) {
 	return document.getElementById(id);
 }
 
 function on_load() {
-	goog.events.listen(
-		g("ta_select"),
-		goog.events.EventType.CHANGE,
-		function() { return element_change(this); }
-	);
+	field = new revamp.workfield(g("field"));
+	toolbar = new revamp.toolbar(g("toolbar"));
 
 	goog.events.listen(
 		window,
@@ -22,19 +38,12 @@ function on_load() {
 	resize_field_and_toolbar();
 }
 
-function element_change(elem) {
-	switch (elem.id) {
-		case "ta_select":
-			g("test").style["text-align"] = elem.value;
-	}
-}
-
 function resize_field_and_toolbar() {
 
-	g("field").style.height = (goog.style.getBounds(document.querySelector("body")).height -
-		goog.style.getBounds(g("toolbar")).height) + 'px';
+	field.setHeight(
+		goog.style.getBounds(document.querySelector("body")).height - toolbar.getHeight()
+	);
 
 }
 
-goog.exportSymbol('g', g);
 goog.exportSymbol('on_load', on_load);
