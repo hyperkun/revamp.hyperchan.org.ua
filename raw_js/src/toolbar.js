@@ -1,5 +1,7 @@
 goog.provide("revamp.toolbar");
 
+goog.require("goog.style");
+
 /**
  * @constructor
  */
@@ -33,7 +35,7 @@ revamp.toolbar.prototype.getHeight = function() {
 revamp.toolbar.prototype.onCurrentBlockChanged = function() {
 	this.pauseHandling = true;
 
-	g("ta_select").value = get_field().getSelectedBlock().style["text-align"];
+	g("ta_select").value = goog.style.getComputedStyle(get_field().getSelectedBlock(), "text-align");
 
 	this.pauseHandling = false;
 }
