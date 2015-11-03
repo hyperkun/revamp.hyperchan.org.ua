@@ -1,17 +1,14 @@
 goog.provide("revamp.toolbar");
 
 goog.require("goog.style");
+goog.require("revamp.container");
 
 /**
  * @constructor
  */
-revamp.toolbar = function(elem) {
-	
-	/**
-	 * Element that represents toolbar in DOM.
-	 * @type {Element}
-	 */
-	this.elem = elem;
+revamp.toolbar = function(element) {
+
+	revamp.container.call(this, element);
 
 	/**
 	 * In case we need to change field values for ourselves
@@ -21,16 +18,9 @@ revamp.toolbar = function(elem) {
 	 */
 	this.pauseHandling = false;
 
-	goog.events.listen(elem, goog.events.EventType.CHANGE, this.handleChange_, false, this);
+	goog.events.listen(element, goog.events.EventType.CHANGE, this.handleChange_, false, this);
 }
-
-/**
- * Gets toolbar's height.
- * @return {number} Height in pixels.
- */
-revamp.toolbar.prototype.getHeight = function() {
-	return goog.style.getBounds(this.elem).height;
-}
+goog.inherits(revamp.toolbar, revamp.container);
 
 revamp.toolbar.prototype.onCurrentBlockChanged = function() {
 	this.pauseHandling = true;

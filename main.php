@@ -31,7 +31,7 @@
 		bottom:0;
 		height:50pt;
 	}
-	#field {
+	#field, #overlay {
 		position:fixed;
 		width:100%;
 		max-width:100%;
@@ -40,20 +40,28 @@
 		overflow-x:auto;
 		overflow-y:auto;
 	}
+	#overlay {
+		z-index:2;
+		background-color:transparent;
+		display:none;
+	}
 	</style>
 	<script>
 		document.addEventListener("DOMContentLoaded", function(){ on_load(); });
 	</script>
 <?php if (DEBUG): ?>
 	<script src="/raw_js/closure-library/closure/goog/base.js"></script>
+	<script src="/raw_js/src/container.js"></script>
 	<script src="/raw_js/src/workfield.js"></script>
 	<script src="/raw_js/src/toolbar.js"></script>
+	<script src="/raw_js/src/overlay.js"></script>
 	<script src="/raw_js/src/a.js"></script>
 <?php else: ?>
 	<script src="/res/a.js?<?php echo resource_version("a.js"); ?>"></script>
 <?php endif; ?>
 </head>
 <body>
+<div id=overlay></div>
 <div id=field>
 	<div class=test>test test test</div>
 	<br>

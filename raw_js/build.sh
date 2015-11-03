@@ -36,7 +36,7 @@ fi
 
 java -jar closure-compiler.jar --js src --js closure-library \
 	--only_closure_dependencies \
-	--closure_entry_point hyperchan.revamp \
+	--closure_entry_point revamp \
 	--compilation_level=ADVANCED_OPTIMIZATIONS \
 	--charset=UTF-8 \
 	--js_output_file ../res/a.js

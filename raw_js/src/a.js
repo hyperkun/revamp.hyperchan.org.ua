@@ -2,11 +2,13 @@ goog.require("goog.events");
 goog.require("goog.style");
 goog.require("revamp.workfield");
 goog.require("revamp.toolbar");
+goog.require("revamp.overlay");
 
 goog.provide("revamp");
 
 var field = null;
 var toolbar = null;
+var overlay = null;
 
 /**
  * @return {revamp.workfield}
@@ -22,6 +24,13 @@ function get_toolbar() {
 	return toolbar;
 }
 
+/**
+ * @return {revamp.overlay}
+ */
+function get_overlay() {
+	return overlay;
+}
+
 function g(id) {
 	return document.getElementById(id);
 }
@@ -29,20 +38,22 @@ function g(id) {
 function on_load() {
 	field = new revamp.workfield(g("field"));
 	toolbar = new revamp.toolbar(g("toolbar"));
+	overlay = new revamp.overlay(g("overlay"));
 
 	goog.events.listen(
 		window,
 		goog.events.EventType.RESIZE,
-		resize_field_and_toolbar
+		on_resize
 	);
-	resize_field_and_toolbar();
+	on_resize();
 }
 
-function resize_field_and_toolbar() {
+function on_resize() {
 
-	field.setHeight(
-		goog.style.getBounds(document.querySelector("body")).height - toolbar.getHeight()
-	);
+	var field_height = goog.style.getBounds(document.querySelector("body")).height - toolbar.getHeight();
+
+	field.setHeight(field_height);
+	overlay.setHeight(field_height);
 
 }
 
