@@ -15,6 +15,10 @@ revamp.workfield = function(element) {
 	this.selectedBlock = null;
 
 	goog.events.listen(element, goog.events.EventType.CLICK, this.handleClick_, true, this);
+
+	// each scroll tick, we will move 4 markers - DOM elements (they are absolute-positioned, but anyway)
+	// TODO: how inefficient is it?
+	goog.events.listen(element, goog.events.EventType.SCROLL, revamp.overlay.prototype.updateSelectedBlockMarkers, true, get_overlay());
 }
 goog.inherits(revamp.workfield, revamp.container);
 

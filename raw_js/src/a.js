@@ -36,9 +36,9 @@ function g(id) {
 }
 
 function on_load() {
+	overlay = new revamp.overlay(g("overlay"));
 	field = new revamp.workfield(g("field"));
 	toolbar = new revamp.toolbar(g("toolbar"));
-	overlay = new revamp.overlay(g("overlay"));
 
 	goog.events.listen(
 		window,

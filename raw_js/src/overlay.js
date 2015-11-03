@@ -3,6 +3,23 @@ goog.provide("revamp.overlay");
 goog.require("revamp.container");
 
 /**
+ * We could just add markers onto the workfield, but then we'll
+ * have a problem - since markers cover a bit larger area
+ * than element they point to, adding them to workfield will
+ * cause it to uncontrollably overflow.
+ * For example, if we place marker that points at the most
+ * top-left point on the workfield, workfield will grow a bit to
+ * the top and to the left, which is not what we want.
+ * The solution is this: we wrap our workfield with an "overlay" -
+ * stationary, unresizeable DOM element that occupies the whole
+ * screen expect toolbar, has overflow hidden and has such children:
+ * the workfield and markers.
+ * When the workfield scrolls, markers are scrolled with him.
+ * This way, markers can be rendered over workfield's scrollbars
+ * and beyond the page without risking to break it.
+ */
+
+/**
  * @constructor
  */
 revamp.overlay = function(element) {
@@ -49,17 +66,28 @@ revamp.overlay.prototype.updateSelectedBlockMarkers = function() {
 		}, {});
 	}
 
-	var bounds = goog.style.getBounds(get_field().getSelectedBlock());
+	var block = get_field().getSelectedBlock();
+	if (block == null)
+		return;
 
-	this.markers["top-left"].style.left = bounds.left + "px";
-	this.markers["top-left"].style.top = bounds.top + "px";
+	var bounds = goog.style.getBounds(block);
 
-	this.markers["top-right"].style.left = bounds.left + bounds.width + "px";
-	this.markers["top-right"].style.top = bounds.top + "px";
+	this.moveMarkerTo_(this.markers["top-left"    ], bounds.left,                bounds.top);
+	this.moveMarkerTo_(this.markers["top-right"   ], bounds.left + bounds.width, bounds.top);
+	this.moveMarkerTo_(this.markers["bottom-left" ], bounds.left,                bounds.top + bounds.height);
+	this.moveMarkerTo_(this.markers["bottom-right"], bounds.left + bounds.width, bounds.top + bounds.height);
+}
 
-	this.markers["bottom-left"].style.left = bounds.left + "px";
-	this.markers["bottom-left"].style.top = bounds.top + bounds.height + "px";
+revamp.overlay.prototype.MARKER_HALF_WIDTH_PX  = 5;
+revamp.overlay.prototype.MARKER_HALF_HEIGHT_PX = 5;
 
-	this.markers["bottom-right"].style.left = bounds.left + bounds.width + "px";
-	this.markers["bottom-right"].style.top = bounds.top + bounds.height + "px";
+/**
+ * Moves marker so its center will be in (x, y) in the overlay space.
+ * @param {Element} marker Marker to place.
+ * @param {Number} x X coordinate for this place in the overlay space.
+ * @param {Number} y Y coordinate for this place in the overlay space.
+ */
+revamp.overlay.prototype.moveMarkerTo_ = function(marker, x, y) {
+	marker.style.left = (x - this.MARKER_HALF_WIDTH_PX ) + "px";
+	marker.style.top  = (y - this.MARKER_HALF_HEIGHT_PX) + "px";
 }

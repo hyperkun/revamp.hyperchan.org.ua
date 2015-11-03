@@ -41,9 +41,6 @@
 		overflow-y:auto;
 		background-color:transparent;
 	}
-	.-r-marker {
-		z-index:2;
-	}
 	</style>
 	<script>
 		document.addEventListener("DOMContentLoaded", function(){ on_load(); });
