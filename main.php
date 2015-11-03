@@ -39,11 +39,10 @@
 		max-height:100%;
 		overflow-x:auto;
 		overflow-y:auto;
-	}
-	#overlay {
-		z-index:2;
 		background-color:transparent;
-		display:none;
+	}
+	.-r-marker {
+		z-index:2;
 	}
 	</style>
 	<script>
@@ -61,7 +60,7 @@
 <?php endif; ?>
 </head>
 <body>
-<div id=overlay></div>
+<div id=overlay>
 <div id=field>
 	<div class=test>test test test</div>
 	<br>
@@ -164,8 +163,7 @@
 	<div class=test>test test test</div>
 	<br>
 	<div class=test>test test test</div>
-	<br>
-	
+</div>
 </div>
 <form id=toolbar>
 	text-align:
