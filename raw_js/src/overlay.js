@@ -28,10 +28,26 @@ revamp.overlay = function(element) {
 
 	/**
 	 * Map with markers within element (keys are their ids).
-	 * Initialized when first block is selected.
-	 * @type {Object|null}
+	 * @type {Object}
 	 */
-	this.markers = null;
+	this.markers = [
+		"top-left", "top-right", "bottom-right", "bottom-left"
+	].reduce(function(map, id) {
+		var marker = new Image();
+		marker.id = id + "-marker";
+		marker.src = '/res/marker.svg';
+		marker.width = this.MARKER_WIDTH_PX;
+		marker.height = this.MARKER_HEIGHT_PX;
+		marker.className = '-r-marker';
+		marker.style.position = 'absolute';
+		marker.style.top = '-9999px';
+		marker.style.left = '-9999px';
+
+		this.element.appendChild(marker);
+
+		map[id] = marker;
+		return map;
+	}.bind(this), {});
 
 	goog.events.listen(element, goog.events.EventType.CLICK, this.handleClick_, true, this);
 
@@ -46,29 +62,6 @@ revamp.overlay.prototype.handleClick_ = function(e) {
 }
 
 revamp.overlay.prototype.updateSelectedBlockMarkers = function() {
-
-	if (this.markers === null) {
-		var overlay = this;
-
-		this.markers = [
-			"top-left", "top-right", "bottom-right", "bottom-left"
-		].reduce(function(map, id) {
-			var marker = new Image();
-			marker.id = id + "-marker";
-			marker.src = '/res/marker.svg';
-			marker.width = overlay.MARKER_WIDTH_PX;
-			marker.height = overlay.MARKER_HEIGHT_PX;
-			marker.className = '-r-marker';
-			marker.style.position = 'absolute';
-			marker.style.top = '20px';
-			marker.style.left = '20px';
-
-			overlay.element.appendChild(marker);
-
-			map[id] = marker;
-			return map;
-		}, {});
-	}
 
 	var block = get_field().getSelectedBlock();
 	if (block == null)
