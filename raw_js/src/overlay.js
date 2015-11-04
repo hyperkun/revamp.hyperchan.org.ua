@@ -38,6 +38,9 @@ revamp.overlay = function(element) {
 }
 goog.inherits(revamp.overlay, revamp.container);
 
+revamp.overlay.prototype.MARKER_WIDTH_PX  = 10;
+revamp.overlay.prototype.MARKER_HEIGHT_PX = 10;
+
 revamp.overlay.prototype.handleClick_ = function(e) {
 	return false;
 }
@@ -53,7 +56,8 @@ revamp.overlay.prototype.updateSelectedBlockMarkers = function() {
 			var marker = new Image();
 			marker.id = id + "-marker";
 			marker.src = '/res/marker.svg';
-			marker.width = marker.height = 10;
+			marker.width = overlay.MARKER_WIDTH_PX;
+			marker.height = overlay.MARKER_HEIGHT_PX;
 			marker.className = '-r-marker';
 			marker.style.position = 'absolute';
 			marker.style.top = '20px';
@@ -78,9 +82,6 @@ revamp.overlay.prototype.updateSelectedBlockMarkers = function() {
 	this.moveMarkerTo_(this.markers["bottom-right"], bounds.left + bounds.width, bounds.top + bounds.height);
 }
 
-revamp.overlay.prototype.MARKER_HALF_WIDTH_PX  = 5;
-revamp.overlay.prototype.MARKER_HALF_HEIGHT_PX = 5;
-
 /**
  * Moves marker so its center will be in (x, y) in the overlay space.
  * @param {Element} marker Marker to place.
@@ -88,6 +89,6 @@ revamp.overlay.prototype.MARKER_HALF_HEIGHT_PX = 5;
  * @param {Number} y Y coordinate for this place in the overlay space.
  */
 revamp.overlay.prototype.moveMarkerTo_ = function(marker, x, y) {
-	marker.style.left = (x - this.MARKER_HALF_WIDTH_PX ) + "px";
-	marker.style.top  = (y - this.MARKER_HALF_HEIGHT_PX) + "px";
+	marker.style.left = (x - this.MARKER_WIDTH_PX  / 2) + "px";
+	marker.style.top  = (y - this.MARKER_HEIGHT_PX / 2) + "px";
 }
