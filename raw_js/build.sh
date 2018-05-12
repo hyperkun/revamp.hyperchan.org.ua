@@ -1,5 +1,10 @@
 #!/bin/bash
 
+command -v java >/dev/null 2>&1 ||
+{
+	echo >&2 "Не знайдено Java. Для того, щоб збілдити компілятором Google, необхідно встановити Java (JDK або JRE) принаймні версії 1.7."; exit 1;
+}
+
 cd "$(dirname "$0")"
 
 if [[ ! -d closure-library ]];
@@ -30,8 +35,12 @@ then
 	fi
 	echo "Google Closure Compiler закачаний, розпаковую...";
 	unzip -d /tmp/hyper-build /tmp/hyper-build/compiler.zip > /dev/null
-	mv /tmp/hyper-build/compiler.jar closure-compiler.jar
+	mv /tmp/hyper-build/*compiler*.jar closure-compiler.jar
 	rm -r /tmp/hyper-build
+	if [[ ! -f closure-compiler.jar ]]; then
+		echo "У зкачаному архіві Google Closure Compiler не був знайдений файл компілятора compiler.jar."
+		exit 1
+	fi
 fi
 
 java -jar closure-compiler.jar --js src --js closure-library \
