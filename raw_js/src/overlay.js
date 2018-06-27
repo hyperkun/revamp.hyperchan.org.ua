@@ -1,6 +1,8 @@
 goog.provide("revamp.overlay");
 
 goog.require("revamp.container");
+goog.require("goog.style");
+goog.require("goog.fx.Dragger");
 
 /**
  * We could just add markers onto the workfield, but then we'll
@@ -43,11 +45,19 @@ revamp.overlay = function(element) {
 		marker.style.top = '-9999px';
 		marker.style.left = '-9999px';
 
+		marker.dragger = new goog.fx.Dragger(marker);
+
+		goog.events.listen(marker.dragger, goog.fx.Dragger.EventType.DRAG, function() {
+			console.log(arguments);
+		});
+
 		this.element.appendChild(marker);
 
 		map[id] = marker;
 		return map;
 	}.bind(this), {});
+
+	this.dragMousePos = [null, null];
 
 	goog.events.listen(element, goog.events.EventType.CLICK, this.handleClick_, true, this);
 
@@ -84,4 +94,16 @@ revamp.overlay.prototype.updateSelectedBlockMarkers = function() {
 revamp.overlay.prototype.moveMarkerTo_ = function(marker, x, y) {
 	marker.style.left = (x - this.MARKER_WIDTH_PX  / 2) + "px";
 	marker.style.top  = (y - this.MARKER_HEIGHT_PX / 2) + "px";
+}
+
+/**
+ * Moves marker by dx pixels right and by dy pixels down.
+ * @param {Element} marker Marker to place.
+ * @param {Number} dx X movement value.
+ * @param {Number} dy Y movement value.
+ */
+revamp.overlay.prototype.moveMarkerAt_ = function(marker, dx, dy) {
+	var currentPos = goog.style.getPosition(marker);
+	marker.style.left = currentPos.x + dx + "px";
+	marker.style.top  = currentPos.y + dy + "px";
 }
