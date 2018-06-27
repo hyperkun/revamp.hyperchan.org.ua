@@ -47,9 +47,10 @@ revamp.overlay = function(element) {
 
 		marker.dragger = new goog.fx.Dragger(marker);
 
-		goog.events.listen(marker.dragger, goog.fx.Dragger.EventType.DRAG, function() {
-			console.log(arguments);
-		});
+		goog.events.listen(marker.dragger, goog.fx.Dragger.EventType.START,
+			this.handleMarkerDragStart_, false, this);
+		goog.events.listen(marker.dragger, goog.fx.Dragger.EventType.DRAG,
+			this.handleMarkerDrag_, false, this);
 
 		this.element.appendChild(marker);
 
@@ -72,7 +73,6 @@ revamp.overlay.prototype.handleClick_ = function(e) {
 }
 
 revamp.overlay.prototype.updateSelectedBlockMarkers = function() {
-
 	var block = get_field().getSelectedBlock();
 	if (block == null)
 		return;
@@ -83,6 +83,11 @@ revamp.overlay.prototype.updateSelectedBlockMarkers = function() {
 	this.moveMarkerTo_(this.markers["top-right"   ], bounds.left + bounds.width, bounds.top);
 	this.moveMarkerTo_(this.markers["bottom-left" ], bounds.left,                bounds.top + bounds.height);
 	this.moveMarkerTo_(this.markers["bottom-right"], bounds.left + bounds.width, bounds.top + bounds.height);
+
+	this.setMarkerLimits_(this.markers["top-left"    ], 0, 0, bounds.left + bounds.width, bounds.top + bounds.height);
+	this.setMarkerLimits_(this.markers["top-right"   ], bounds.left, 0, Infinity, bounds.top + bounds.height);
+	this.setMarkerLimits_(this.markers["bottom-left" ], 0, bounds.top, bounds.left + bounds.width, Infinity);
+	this.setMarkerLimits_(this.markers["bottom-right"], bounds.left, bounds.top, Infinity, Infinity);
 }
 
 /**
@@ -106,4 +111,68 @@ revamp.overlay.prototype.moveMarkerAt_ = function(marker, dx, dy) {
 	var currentPos = goog.style.getPosition(marker);
 	marker.style.left = currentPos.x + dx + "px";
 	marker.style.top  = currentPos.y + dy + "px";
+}
+
+/**
+ * Sets limits for marker dragging.
+ * @param {Element} marker Marker to set.
+ * @param {Number} top Top limit, in overlay coordinates.
+ * @param {Number} left Left limit, in overlay coordinates.
+ * @param {Number} bottom Bottom limit, in overlay coordinates.
+ * @param {Number} right Right limit, in overlay coordinates.
+ */
+revamp.overlay.prototype.setMarkerLimits_ = function(marker, left, top, right, bottom) {
+	marker.dragger.setLimits(new goog.math.Rect(left, top, right - left, bottom - top)
+		.translate(-this.MARKER_WIDTH_PX / 2, -this.MARKER_HEIGHT_PX / 2));
+}
+
+revamp.overlay.prototype.handleMarkerDragStart_ = function(e) {
+	this.previous_frame_position = goog.style.getPosition(e.dragger.target);
+}
+
+revamp.overlay.prototype.handleMarkerDrag_ = function(e) {
+	var block = get_field().getSelectedBlock();
+	var marker = e.dragger.target;
+	var new_position = goog.style.getPosition(marker);
+
+	var delta = goog.math.Coordinate.difference(new_position, this.previous_frame_position);
+	var bounds = goog.style.getBounds(block);
+	if (marker == this.markers["top-left"] || marker == this.markers["bottom-left"]) {
+		bounds.left += delta.x;
+		bounds.width -= delta.x;
+	}
+	if (marker == this.markers["top-right"] || marker == this.markers["bottom-right"]) {
+		bounds.width += delta.x;
+	}
+	if (marker == this.markers["top-left"] || marker == this.markers["top-right"]) {
+		bounds.top += delta.y;
+		bounds.height -= delta.y;
+	}
+	if (marker == this.markers["bottom-left"] || marker == this.markers["bottom-right"]) {
+		bounds.height += delta.y;
+	}
+	
+	block.style.left = bounds.left + 'px';
+	block.style.top = bounds.top + 'px';
+	block.style.width = bounds.width + 'px';
+	block.style.height = bounds.height + 'px';
+
+	this.previous_frame_position = new_position;
+
+	if (marker == this.markers["top-left"]) {
+		this.markers["bottom-left"].style.left = new_position.x + 'px';
+		this.markers["top-right"].style.top = new_position.y + 'px';
+	}
+	if (marker == this.markers["top-right"]) {
+		this.markers["bottom-right"].style.left = new_position.x + 'px';
+		this.markers["top-left"].style.top = new_position.y + 'px';
+	}
+	if (marker == this.markers["bottom-left"]) {
+		this.markers["top-left"].style.left = new_position.x + 'px';
+		this.markers["bottom-right"].style.top = new_position.y + 'px';
+	}
+	if (marker == this.markers["bottom-right"]) {
+		this.markers["top-right"].style.left = new_position.x + 'px';
+		this.markers["bottom-left"].style.top = new_position.y + 'px';
+	}
 }
