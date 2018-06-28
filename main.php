@@ -20,9 +20,11 @@
 		display:inline-block;
 	}
 	.test {
+		position:absolute;
 		color:white;
 		background-color:red;
 		width:250px;
+		height:30px;
 		text-align:left;
 	}
 	#toolbar {
@@ -62,107 +64,9 @@
 <body>
 <div id=overlay>
 <div id=field>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
-	<br>
-	<div class=test>test test test</div>
+	<?php for ($i = 0; $i < 100; $i++): ?>
+	<div class=test style="top:<?php echo $i * 50; ?>px">test test test</div>
+	<?php endfor; ?>
 </div>
 </div>
 <form id=toolbar>

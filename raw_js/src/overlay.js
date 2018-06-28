@@ -51,6 +51,8 @@ revamp.overlay = function(element) {
 			this.handleMarkerDragStart_, false, this);
 		goog.events.listen(marker.dragger, goog.fx.Dragger.EventType.DRAG,
 			this.handleMarkerDrag_, false, this);
+		goog.events.listen(marker.dragger, goog.fx.Dragger.EventType.END,
+			this.handleMarkerDragEnd_, false, this);
 
 		this.element.appendChild(marker);
 
@@ -84,10 +86,7 @@ revamp.overlay.prototype.updateSelectedBlockMarkers = function() {
 	this.moveMarkerTo_(this.markers["bottom-left" ], bounds.left,                bounds.top + bounds.height);
 	this.moveMarkerTo_(this.markers["bottom-right"], bounds.left + bounds.width, bounds.top + bounds.height);
 
-	this.setMarkerLimits_(this.markers["top-left"    ], 0, 0, bounds.left + bounds.width, bounds.top + bounds.height);
-	this.setMarkerLimits_(this.markers["top-right"   ], bounds.left, 0, Infinity, bounds.top + bounds.height);
-	this.setMarkerLimits_(this.markers["bottom-left" ], 0, bounds.top, bounds.left + bounds.width, Infinity);
-	this.setMarkerLimits_(this.markers["bottom-right"], bounds.left, bounds.top, Infinity, Infinity);
+	this.updateMarkerLimits_();
 }
 
 /**
@@ -175,4 +174,15 @@ revamp.overlay.prototype.handleMarkerDrag_ = function(e) {
 		this.markers["top-right"].style.left = new_position.x + 'px';
 		this.markers["bottom-left"].style.top = new_position.y + 'px';
 	}
+}
+
+revamp.overlay.prototype.handleMarkerDragEnd_ = function(e) {
+	this.updateMarkerLimits_();
+}
+
+revamp.overlay.prototype.updateMarkerLimits_ = function() {
+	this.setMarkerLimits_(this.markers["top-left"    ], 0, 0, bounds.left + bounds.width, bounds.top + bounds.height);
+	this.setMarkerLimits_(this.markers["top-right"   ], bounds.left, 0, Infinity, bounds.top + bounds.height);
+	this.setMarkerLimits_(this.markers["bottom-left" ], 0, bounds.top, bounds.left + bounds.width, Infinity);
+	this.setMarkerLimits_(this.markers["bottom-right"], bounds.left, bounds.top, Infinity, Infinity);
 }
