@@ -181,6 +181,8 @@ revamp.overlay.prototype.handleMarkerDragEnd_ = function(e) {
 }
 
 revamp.overlay.prototype.updateMarkerLimits_ = function() {
+	var bounds = goog.style.getBounds(get_field().getSelectedBlock());
+
 	this.setMarkerLimits_(this.markers["top-left"    ], 0, 0, bounds.left + bounds.width, bounds.top + bounds.height);
 	this.setMarkerLimits_(this.markers["top-right"   ], bounds.left, 0, Infinity, bounds.top + bounds.height);
 	this.setMarkerLimits_(this.markers["bottom-left" ], 0, bounds.top, bounds.left + bounds.width, Infinity);
